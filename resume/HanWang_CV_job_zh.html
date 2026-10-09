@@ -32,6 +32,14 @@
       box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
     }
 
+    a.link {
+      color: var(--accent-soft);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    a.link:hover { color: var(--accent); }
+
     .header {
       display: flex;
       justify-content: space-between;
@@ -77,20 +85,36 @@
       text-align: right;
       font-size: 10.5px;
       color: var(--muted);
-      line-height: 1.45;
+      line-height: 1.55;
     }
 
-    .contact a { color: var(--accent-soft); text-decoration: none; }
+    .contact-row {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 5px;
+    }
+
+    .icon {
+      width: 12px;
+      height: 12px;
+      fill: var(--accent);
+      flex-shrink: 0;
+    }
 
     .columns {
       display: grid;
-      grid-template-columns: 1.55fr 1fr;
-      gap: 10px;
+      grid-template-columns: 1.48fr 1fr;
+      gap: 11px;
+      align-items: start;
     }
 
     section { margin-bottom: 7px; }
 
     .section-title {
+      display: flex;
+      align-items: center;
+      gap: 5px;
       font-size: 12px;
       font-weight: 700;
       color: var(--accent);
@@ -98,6 +122,8 @@
       padding-bottom: 2px;
       border-bottom: 1px solid var(--line);
     }
+
+    .section-title svg { width: 13px; height: 13px; fill: var(--accent); }
 
     .entry { margin-bottom: 5px; }
 
@@ -108,14 +134,21 @@
       gap: 6px;
     }
 
-    .entry-title {
+    .entry-platform {
       font-size: 11.5px;
       font-weight: 700;
+      color: var(--accent);
+    }
+
+    .entry-topic {
+      font-size: 10.5px;
+      font-weight: 600;
       color: #111827;
+      margin-top: 1px;
     }
 
     .entry-sub {
-      font-size: 10.5px;
+      font-size: 10px;
       color: var(--muted);
       margin-top: 1px;
     }
@@ -136,44 +169,33 @@
 
     .highlight { color: var(--accent); font-weight: 600; }
 
-    .honor-item {
-      display: flex;
-      justify-content: space-between;
-      gap: 6px;
-      margin-bottom: 3px;
-      font-size: 10.5px;
-    }
-
-    .honor-item .name { flex: 1; }
-
     .pub-list {
       list-style: decimal;
       padding-left: 1.2em;
-      font-size: 10.5px;
+      font-size: 10.3px;
     }
 
     .pub-list li {
-      margin-bottom: 3px;
+      margin-bottom: 4px;
       text-align: justify;
     }
 
     .pub-list strong { font-weight: 700; color: #111827; }
 
-    .skills-line {
-      font-size: 10.5px;
-      line-height: 1.45;
-    }
+    .honor-block { margin-bottom: 5px; font-size: 10.5px; }
 
+    .honor-block .entry-head { margin-bottom: 1px; }
+
+    .skills-line { font-size: 10.5px; line-height: 1.45; }
     .skills-line + .skills-line { margin-top: 2px; }
+
+    .link-list { font-size: 10.3px; line-height: 1.5; padding-left: 0; list-style: none; }
+    .link-list li { margin-bottom: 2px; }
 
     @media print {
       body { background: white; padding: 0; font-size: 11px; }
-      .page {
-        box-shadow: none;
-        padding: 6mm 7mm 5mm;
-        max-width: none;
-      }
-      a { color: var(--text); text-decoration: none; }
+      .page { box-shadow: none; padding: 6mm 7mm 5mm; max-width: none; }
+      a.link { color: var(--accent-soft) !important; text-decoration: underline !important; }
       @page { size: A4; margin: 0; }
     }
   </style>
@@ -189,51 +211,61 @@
         </div>
       </div>
       <div class="contact">
-        wanghan334452@gmail.com<br />
-        159-5660-9883<br />
-        北京 · 中科院自动化所<br />
-        github.com/vcjgcjc99
+        <div class="contact-row">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 4-8 5L4 8V6l8 5 8-5v2z"/></svg>
+          <a class="link" href="mailto:wanghan334452@gmail.com">wanghan334452@gmail.com</a>
+        </div>
+        <div class="contact-row">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M6.6 10.8a15 15 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.24 11.4 11.4 0 0 0 3.57.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.6a1 1 0 0 1 1 1 11.4 11.4 0 0 0 .57 3.57 1 1 0 0 1-.24 1L6.6 10.8z"/></svg>
+          <a class="link" href="tel:+8615956609883">159-5660-9883</a>
+        </div>
+        <div class="contact-row">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5z"/></svg>
+          <span>北京 · 中科院自动化所</span>
+        </div>
+        <div class="contact-row">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.38.6.11.82-.26.82-.58v-2.02c-3.34.72-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.75.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.5 1 .11-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.92 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.17 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.29-1.55 3.3-1.23 3.3-1.23.66 1.65.24 2.87.12 3.17.77.84 1.24 1.91 1.24 3.22 0 4.6-2.81 5.62-5.49 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.69.83.58C20.56 21.8 24 17.3 24 12 24 5.37 18.63 0 12 0z"/></svg>
+          <a class="link" href="https://github.com/vcjgcjc99">github.com/vcjgcjc99</a>
+        </div>
       </div>
     </header>
 
     <div class="columns">
       <main>
         <section>
-          <h2 class="section-title">教育背景</h2>
+          <h2 class="section-title">
+            <svg viewBox="0 0 24 24"><path d="M12 3 1 9l11 6 9-4.91V17h2V9L12 3z"/></svg>
+            教育背景
+          </h2>
           <div class="entry">
             <div class="entry-head">
-              <span class="entry-title">中科院自动化所 · 国科大</span>
+              <span class="entry-platform">中国科学院自动化研究所 · 国科大</span>
               <span class="entry-date">2026.09 — 至今</span>
             </div>
-            <p class="entry-sub">模式识别与智能系统 · 工学博士（博0）</p>
+            <p class="entry-topic">模式识别与智能系统 · 工学博士（博0）</p>
           </div>
           <div class="entry">
             <div class="entry-head">
-              <span class="entry-title">山东大学 · 软件学院</span>
-              <span class="entry-date">2022.09 — 2026.06</span>
+              <span class="entry-platform">山东大学 · 软件学院</span>
+              <span class="entry-date">2023.09 — 2026.06</span>
             </div>
-            <p class="entry-sub">软件工程 · 学士 · GPA 3.98/5.0 · 排名 21/341 · 综测 88</p>
+            <p class="entry-topic">软件工程 · 工学学士</p>
+            <p class="entry-sub">GPA 3.98/5.0 · 专业排名 21/341 · 综合成绩 88</p>
           </div>
         </section>
 
         <section>
-          <h2 class="section-title">论文成果</h2>
-          <ol class="pub-list">
-            <li>[Accepted] <strong>Han Wang</strong>, Wei Du, Yanyu Xu, Lizhen Cui. Dynamic Bias Compensation in Soft Actor-Critic: A Method for Stable Value Estimation. <em>Pattern Recognition</em>, 2026. [CCF-B · JCR Q1 · 中科院一区 TOP] 10.1016/j.patcog.2026.114410</li>
-            <li>[Oral] <strong>Han Wang</strong>, Wei Du, Yanyu Xu, Lizhen Cui. SAC-B: Soft Actor-Critic with Bias for Suppressing Q-value Overestimation in Off-Policy Reinforcement Learning. DAI 2025. [CCF-C · Oral] 10.1145/3772429.3772436</li>
-            <li>[Preprint] Hongnan Ma, <strong>Han Wang</strong>, Shenglin Wang, et al. CreativeGame: Toward Mechanic-Aware Creative Game Generation. arXiv:2604.19926, 2026. arXiv:2604.19926</li>
-          </ol>
-        </section>
-
-        <section>
-          <h2 class="section-title">科研项目经历</h2>
+          <h2 class="section-title">
+            <svg viewBox="0 0 24 24"><path d="M4 6h16v12H4V6zm2 2v8h12V8H6z"/></svg>
+            科研项目经历
+          </h2>
 
           <div class="entry">
             <div class="entry-head">
-              <span class="entry-title">强化学习与智能决策研究</span>
+              <span class="entry-platform">山东大学软件学院</span>
               <span class="entry-date">2025.04 – 2025.11</span>
             </div>
-            <p class="entry-sub">山东大学软件学院</p>
+            <p class="entry-topic">强化学习与智能决策研究</p>
             <ul class="bullets">
               <li>围绕 Off-policy RL 中 Q-value 估计偏差与训练不稳定问题，分析 Soft Actor-Critic 中价值偏差的产生与传播机制，提出动态偏差补偿方法提升 Critic 估计稳定性。</li>
               <li>完成算法实现、消融实验及多任务性能验证，分析不同偏差状态及补偿策略对价值估计与策略学习的影响。</li>
@@ -243,10 +275,11 @@
 
           <div class="entry">
             <div class="entry-head">
-              <span class="entry-title">LLM Agent 与科学发现 Benchmark</span>
+              <span class="entry-platform">UCL / University of Bristol</span>
               <span class="entry-date">2026.03 – 至今</span>
             </div>
-            <p class="entry-sub">UCL / University of Bristol · 指导教师：汪军教授、杨梦月老师</p>
+            <p class="entry-topic">LLM Agent 与科学发现 Benchmark</p>
+            <p class="entry-sub">指导教师：汪军教授、杨梦月老师</p>
             <ul class="bullets">
               <li>面向 AI for Science，设计评估 LLM Agent 科学发现能力的交互式 Benchmark，考察智能体自主完成理论形成、知识迁移、理论精化与错误修正的能力。</li>
               <li>负责任务设计、科学环境构建及自动化评测，通过隐藏测试与历史知识回放机制，评估智能体能否形成并持续修正可执行科学规律。</li>
@@ -256,10 +289,11 @@
 
           <div class="entry">
             <div class="entry-head">
-              <span class="entry-title">具身大模型持续学习与奖励设计</span>
+              <span class="entry-platform">北京中关村学院 · 深澜计划</span>
               <span class="entry-date">2026.03 – 2026.06</span>
             </div>
-            <p class="entry-sub">北京中关村学院 · 深澜计划 · 指导教师：于超老师</p>
+            <p class="entry-topic">具身大模型持续学习与奖励设计</p>
+            <p class="entry-sub">指导教师：于超老师</p>
             <ul class="bullets">
               <li>围绕 Vision-Language-Action 模型持续学习与机器人泛化问题，开展 VLA 微调、机器人仿真评测及持续学习实验。</li>
               <li>探索基于世界模型的内在奖励设计，利用预测信息辅助机器人策略探索，提升跨任务学习与泛化能力。</li>
@@ -269,24 +303,14 @@
 
           <div class="entry">
             <div class="entry-head">
-              <span class="entry-title">CreativeGame</span>
+              <span class="entry-platform">多智能体游戏生成与进化系统</span>
               <span class="entry-date">2026</span>
             </div>
-            <p class="entry-sub">多智能体游戏生成与进化系统 · 指导教师：温睦宁老师、杨梦月老师</p>
+            <p class="entry-topic">CreativeGame</p>
+            <p class="entry-sub">指导教师：温睦宁老师、杨梦月老师</p>
             <ul class="bullets">
               <li>参与构建多智能体迭代式游戏生成与进化框架，研究游戏机制生成、自动评价、Agent 协作及跨轮次经验积累。参与游戏规则建模与自动评价流程设计，支持系统通过多轮反馈实现机制优化与持续演化。</li>
-              <li>成果挂在 arXiv:2604.19926，并获机器之心推广报道；参与开源项目 CreativeGame。</li>
-            </ul>
-          </div>
-
-          <div class="entry">
-            <div class="entry-head">
-              <span class="entry-title">EBiM 具身双臂操作国际竞赛</span>
-              <span class="entry-date">2025.08 – 2026.10</span>
-            </div>
-            <p class="entry-sub">StarCore SJTU · Task 2 可变形材料操作</p>
-            <ul class="bullets">
-              <li>Phase I 仿真与 Phase II Mobile FR3 Duo 真机评测；策略 Docker 交付与跨站点评测对接；<span class="highlight">Task 2 全球第 4 名</span>。</li>
+              <li>成果挂在 <a class="link" href="https://arxiv.org/abs/2604.19926">arXiv:2604.19926</a>，并获机器之心推广报道；参与开源项目 CreativeGame。</li>
             </ul>
           </div>
         </section>
@@ -294,24 +318,67 @@
 
       <aside>
         <section>
-          <h2 class="section-title">竞赛荣誉</h2>
-          <div class="honor-item">
-            <span class="name"><span class="highlight">EBiM 2026 Task 2</span> · 全球第 4 名</span>
-            <span class="entry-date">2026.10</span>
+          <h2 class="section-title">
+            <svg viewBox="0 0 24 24"><path d="M6 2h9l5 5v15a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z"/></svg>
+            论文成果
+          </h2>
+          <ol class="pub-list">
+            <li>[Accepted] <strong>Han Wang</strong>, Wei Du, Yanyu Xu, Lizhen Cui. Dynamic Bias Compensation in Soft Actor-Critic: A Method for Stable Value Estimation. <em>Pattern Recognition</em>, 2026. [CCF-B · JCR Q1 · 中科院一区 TOP] <a class="link" href="https://doi.org/10.1016/j.patcog.2026.114410">10.1016/j.patcog.2026.114410</a></li>
+            <li>[Oral] <strong>Han Wang</strong>, Wei Du, Yanyu Xu, Lizhen Cui. SAC-B: Soft Actor-Critic with Bias for Suppressing Q-value Overestimation in Off-Policy Reinforcement Learning. DAI 2025. [CCF-C · Oral] <a class="link" href="https://doi.org/10.1145/3772429.3772436">10.1145/3772429.3772436</a></li>
+            <li>[Preprint] Hongnan Ma, <strong>Han Wang</strong>, Shenglin Wang, et al. CreativeGame: Toward Mechanic-Aware Creative Game Generation. <a class="link" href="https://arxiv.org/abs/2604.19926">arXiv:2604.19926</a>, 2026.</li>
+          </ol>
+        </section>
+
+        <section>
+          <h2 class="section-title">
+            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14l-5-4.87 6.91-1.01L12 2z"/></svg>
+            竞赛荣誉
+          </h2>
+          <div class="honor-block">
+            <div class="entry-head">
+              <span class="entry-platform">上海交通大学 · StarCore SJTU 战队</span>
+              <span class="entry-date">2025.08 – 2026.10</span>
+            </div>
+            <p class="entry-topic">EBiM Benchmark Competition 2026</p>
+            <p class="entry-sub">Task 2 可变形材料操作 · Mobile FR3 Duo 跨洲真机验证</p>
+            <ul class="bullets">
+              <li><span class="highlight">Task 2 全球第 4 名</span> · 官方结果：<a class="link" href="https://ebim-benchmark.github.io/zh/results.html">ebim-benchmark.github.io</a></li>
+            </ul>
           </div>
         </section>
 
         <section>
-          <h2 class="section-title">技能特长</h2>
+          <h2 class="section-title">
+            <svg viewBox="0 0 24 24"><path d="M3 3h2v18H3V3zm4 10h2v8H7v-8zm4-4h2v12h-2V9z"/></svg>
+            技能特长
+          </h2>
           <p class="skills-line"><strong>语言</strong> Python、C/C++、Java</p>
-          <p class="skills-line"><strong>AI</strong> PyTorch、RL、LLM Agent、具身/VLA</p>
+          <p class="skills-line"><strong>AI</strong> PyTorch、RL、LLM Agent、具身 / VLA</p>
           <p class="skills-line"><strong>工程</strong> Git、Linux、Docker、LaTeX</p>
         </section>
 
         <section>
-          <h2 class="section-title">其他</h2>
+          <h2 class="section-title">
+            <svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+            相关链接
+          </h2>
+          <ul class="link-list">
+            <li><a class="link" href="https://github.com/vcjgcjc99">GitHub · vcjgcjc99</a></li>
+            <li><a class="link" href="https://github.com/vcjgcjc99/SAC-B">SAC-B 开源实现</a></li>
+            <li><a class="link" href="https://doi.org/10.1016/j.patcog.2026.114410">Pattern Recognition 论文</a></li>
+            <li><a class="link" href="https://doi.org/10.1145/3772429.3772436">DAI 2025 Oral 论文</a></li>
+            <li><a class="link" href="https://arxiv.org/abs/2604.19926">CreativeGame · arXiv</a></li>
+            <li><a class="link" href="https://ebim-benchmark.github.io/competition.html">EBiM 竞赛官网</a></li>
+          </ul>
+        </section>
+
+        <section>
+          <h2 class="section-title">
+            <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z"/></svg>
+            其他
+          </h2>
           <ul class="bullets">
-            <li>意向：算法 / 具身 / Agent 实习</li>
+            <li>求职意向：算法 / 具身智能 / AI Agent 工程实习</li>
             <li>英语：CET-6</li>
           </ul>
         </section>
