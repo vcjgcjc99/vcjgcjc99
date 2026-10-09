@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>汪涵 · 个人简历</title>
+  <title>汪涵 · 求职简历</title>
   <style>
     :root {
       --accent: #1e40af;
@@ -17,7 +17,7 @@
 
     body {
       font-family: "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
-      font-size: 11px;
+      font-size: 10.5px;
       line-height: 1.36;
       color: var(--text);
       background: #f3f4f6;
@@ -40,19 +40,11 @@
 
     .header {
       display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
       gap: 10px;
+      align-items: flex-start;
       padding-bottom: 5px;
       border-bottom: 1.5px solid var(--accent);
       margin-bottom: 6px;
-    }
-
-    .header-left-wrap {
-      display: flex;
-      gap: 10px;
-      align-items: flex-start;
-      flex: 1;
     }
 
     .photo {
@@ -60,43 +52,33 @@
       height: 28mm;
       object-fit: cover;
       border: 1px solid var(--line);
+      flex-shrink: 0;
     }
 
-    .header-left h1 {
+    .header-main { flex: 1; min-width: 0; }
+
+    .header-main h1 {
       font-size: 20px;
       font-weight: 700;
       letter-spacing: 0.04em;
     }
 
-    .header-left .tagline {
-      margin-top: 2px;
-      font-size: 11px;
-      color: var(--accent-soft);
-      font-weight: 600;
-    }
-
-    .contact {
-      text-align: right;
+    .header-contact {
       font-size: 10px;
       color: var(--muted);
-      line-height: 1.5;
+      margin-top: 3px;
     }
 
-    .contact-row {
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      gap: 4px;
+    .job-direction {
+      margin-top: 4px;
+      font-size: 10.5px;
+      font-weight: 600;
+      color: var(--accent-soft);
     }
-
-    .icon { width: 11px; height: 11px; fill: var(--accent); flex-shrink: 0; }
 
     section { margin-bottom: 6px; }
 
     .section-title {
-      display: flex;
-      align-items: center;
-      gap: 5px;
       font-size: 11.5px;
       font-weight: 700;
       color: var(--accent);
@@ -105,34 +87,19 @@
       border-bottom: 1px solid var(--line);
     }
 
-    .section-title svg { width: 12px; height: 12px; fill: var(--accent); }
-
     .entry { margin-bottom: 4px; }
 
     .entry-head {
       display: flex;
       justify-content: space-between;
       align-items: baseline;
-      gap: 6px;
+      gap: 8px;
     }
 
     .entry-platform {
-      font-size: 11px;
-      font-weight: 700;
-      color: var(--accent);
-    }
-
-    .entry-topic {
       font-size: 10.5px;
-      font-weight: 600;
+      font-weight: 700;
       color: #111827;
-      margin-top: 1px;
-    }
-
-    .entry-sub {
-      font-size: 10px;
-      color: var(--muted);
-      margin-top: 1px;
     }
 
     .entry-date {
@@ -141,9 +108,15 @@
       white-space: nowrap;
     }
 
-    ul.bullets {
-      padding-left: 1.1em;
+    .entry-sub {
+      font-size: 10px;
+      color: var(--muted);
       margin-top: 1px;
+    }
+
+    ul.bullets {
+      padding-left: 1.15em;
+      margin-top: 2px;
       font-size: 10px;
     }
 
@@ -157,16 +130,12 @@
       font-size: 10px;
     }
 
-    .pub-list li { margin-bottom: 3px; text-align: justify; }
-    .pub-list strong { font-weight: 700; color: #111827; }
-
-    .edu-bullets {
-      padding-left: 1.1em;
-      font-size: 10px;
-      margin-top: 2px;
+    .pub-list li {
+      margin-bottom: 3px;
+      text-align: justify;
     }
 
-    .edu-bullets li { margin-bottom: 1px; }
+    .pub-list strong { font-weight: 700; color: #111827; }
 
     @media print {
       body { background: white; padding: 0; }
@@ -179,65 +148,46 @@
 <body>
   <div class="page">
     <header class="header">
-      <div class="header-left-wrap">
-        <img class="photo" src="photo_150x200.jpg" alt="汪涵 证件照" />
-        <div class="header-left">
-          <h1>汪涵</h1>
-          <p class="tagline">算法 / 具身智能 / AI Agent · 实习</p>
-        </div>
-      </div>
-      <div class="contact">
-        <div class="contact-row">
-          <svg class="icon" viewBox="0 0 24 24"><path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 4-8 5L4 8V6l8 5 8-5v2z"/></svg>
-          <a class="link" href="mailto:wanghan334452@gmail.com">wanghan334452@gmail.com</a>
-        </div>
-        <div class="contact-row">
-          <svg class="icon" viewBox="0 0 24 24"><path d="M6.6 10.8a15 15 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.24 11.4 11.4 0 0 0 3.57.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.6a1 1 0 0 1 1 1 11.4 11.4 0 0 0 .57 3.57 1 1 0 0 1-.24 1L6.6 10.8z"/></svg>
-          <a class="link" href="tel:+8615956609883">159-5660-9883</a>
-        </div>
-        <div class="contact-row">
-          <svg class="icon" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5z"/></svg>
-          <span>山东济南 · 山东大学软件学院</span>
-        </div>
-        <div class="contact-row">
-          <svg class="icon" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.38.6.11.82-.26.82-.58v-2.02c-3.34.72-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.75.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.5 1 .11-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.92 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.17 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.29-1.55 3.3-1.23 3.3-1.23.66 1.65.24 2.87.12 3.17.77.84 1.24 1.91 1.24 3.22 0 4.6-2.81 5.62-5.49 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.69.83.58C20.56 21.8 24 17.3 24 12 24 5.37 18.63 0 12 0z"/></svg>
-          <a class="link" href="https://github.com/vcjgcjc99">github.com/vcjgcjc99</a>
-        </div>
+      <img class="photo" src="photo_150x200.jpg" alt="汪涵 证件照" />
+      <div class="header-main">
+        <h1>汪涵</h1>
+        <p class="header-contact">
+          <a class="link" href="tel:+8615956609883">+86-15956609883</a>
+          &nbsp;|&nbsp;
+          <a class="link" href="mailto:hanking@mail.sdu.edu.cn">hanking@mail.sdu.edu.cn</a>
+          &nbsp;|&nbsp;
+          山东大学软件学院
+        </p>
+        <p class="job-direction">求职方向：具身智能 / 机器人学习 / Vision-Language-Action / 强化学习</p>
       </div>
     </header>
 
     <section>
-      <h2 class="section-title">
-        <svg viewBox="0 0 24 24"><path d="M12 3 1 9l11 6 9-4.91V17h2V9L12 3z"/></svg>
-        教育背景
-      </h2>
-      <div class="entry">
-        <p class="entry-sub">中关村学院深澜计划优秀营员 Offer</p>
-      </div>
+      <h2 class="section-title">教育背景</h2>
       <div class="entry">
         <div class="entry-head">
-          <span class="entry-platform">山东大学 · 软件学院 · 软件工程专业人工智能班</span>
-          <span class="entry-date">2023.09 – 2027.06</span>
+          <span class="entry-platform">中国科学院自动化研究所｜五年制博士研究生（2027 级，拟入学）</span>
+          <span class="entry-date">2027.09 – 2032.06</span>
         </div>
-        <ul class="edu-bullets">
-          <li>GPA：3.98/5.0，专业排名：21/341，综合成绩：88，CET-6</li>
-          <li>山东大学学业三等奖学金（2023–2024、2024–2025）</li>
+        <ul class="bullets">
+          <li>拟从事具身智能、机器人学习与多模态智能体相关方向研究。</li>
         </ul>
       </div>
       <div class="entry">
         <div class="entry-head">
-          <span class="entry-platform">中国科学院自动化研究所 · 中国科学院大学</span>
-          <span class="entry-date">2026.09 拟入学</span>
+          <span class="entry-platform">山东大学（985 / 211 / 双一流）｜软件学院 · 软件工程专业人工智能班｜本科</span>
+          <span class="entry-date">2023.09 – 2027.06</span>
         </div>
-        <p class="entry-topic">模式识别与智能系统 · 工学博士（推免拟录取，<span class="highlight">尚未入学</span>）</p>
+        <ul class="bullets">
+          <li>GPA：3.984/5，综合成绩专业排名：6.18%，CET-6：548；获北京中关村学院深澜计划优秀营员 Offer。</li>
+          <li>竞赛：全球 AI 算法精英大赛全国二等奖，全国大学生数学竞赛省级一等奖，全国大学生数学建模竞赛省级二等奖。</li>
+          <li>核心课程：高等数学 A+，概率论 A+，数据分析与挖掘 A+，离散数学 A+，数据结构 A，计算机视觉 A。</li>
+        </ul>
       </div>
     </section>
 
     <section>
-      <h2 class="section-title">
-        <svg viewBox="0 0 24 24"><path d="M6 2h9l5 5v15a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z"/></svg>
-        论文成果
-      </h2>
+      <h2 class="section-title">论文成果</h2>
       <ol class="pub-list">
         <li>[Accepted] <strong>Han Wang</strong>, Wei Du, Yanyu Xu, Lizhen Cui. Dynamic Bias Compensation in Soft Actor-Critic: A Method for Stable Value Estimation. <em>Pattern Recognition</em>, 2026. [CCF-B · JCR Q1 · 中科院一区 TOP] <a class="link" href="https://doi.org/10.1016/j.patcog.2026.114410">10.1016/j.patcog.2026.114410</a></li>
         <li>[Oral] <strong>Han Wang</strong>, Wei Du, Yanyu Xu, Lizhen Cui. SAC-B: Soft Actor-Critic with Bias for Suppressing Q-value Overestimation in Off-Policy Reinforcement Learning. DAI 2025. [CCF-C · Oral] <a class="link" href="https://doi.org/10.1145/3772429.3772436">10.1145/3772429.3772436</a></li>
@@ -246,57 +196,26 @@
     </section>
 
     <section>
-      <h2 class="section-title">
-        <svg viewBox="0 0 24 24"><path d="M4 6h16v12H4V6zm2 2v8h12V8H6z"/></svg>
-        科研项目经历
-      </h2>
+      <h2 class="section-title">科研项目经历</h2>
 
       <div class="entry">
         <div class="entry-head">
-          <span class="entry-platform">北京中关村学院 · 深澜计划</span>
-          <span class="entry-date">2026.03 – 2026.06</span>
+          <span class="entry-platform">EBIM 具身智能比赛 Task 2｜上海星骞元机器人科技有限公司 / 上海交通大学</span>
+          <span class="entry-date">2026</span>
         </div>
-        <p class="entry-topic">具身大模型持续学习与奖励设计</p>
-        <p class="entry-sub">指导教师：于超老师</p>
+        <p class="entry-sub">指导者：顾商定（上海交通大学长聘副教授）、冯骞（TUM PhD）</p>
         <ul class="bullets">
-          <li>围绕 Vision-Language-Action 模型持续学习与机器人泛化问题，开展 VLA 微调、机器人仿真评测及持续学习实验。</li>
-          <li>探索基于世界模型的内在奖励设计，利用预测信息辅助机器人策略探索，提升跨任务学习与泛化能力。</li>
-          <li>基于 RLinf 训练框架，开展 π0.5 + World Model 具身后训练实验，探索利用世界模型奖励改善策略学习与跨任务泛化；并获北京中关村学院深澜计划优秀营员。</li>
+          <li>聚焦 EBIM Task 2：Deformable Material Handling / Thermal Pad Placement，面向 Mobile FR3 Duo 双臂机器人完成导热垫抓取、搬运、对齐与放置等可变形物体操作任务。</li>
+          <li>参与仿真任务建模、任务分解、感知与策略执行方案设计，围绕双臂协同、柔性材料操作、视觉目标对齐开展实验验证与结果分析。</li>
+          <li>完成仿真阶段任务后进入线下真机阶段 / Phase II Real-Robot Validation，在真实机器人平台上推进方案验证，体现具身智能算法从仿真到真机的落地能力。</li>
         </ul>
       </div>
 
       <div class="entry">
         <div class="entry-head">
-          <span class="entry-platform">上海交通大学 · StarCore SJTU 战队 · 山东大学软件学院</span>
-          <span class="entry-date">2025.08 – 2026.10</span>
-        </div>
-        <p class="entry-topic">EBiM 具身双臂操作国际竞赛 · Task 2 可变形材料操作</p>
-        <p class="entry-sub">EBiM Benchmark Competition 2026 · Mobile FR3 Duo 跨洲真机验证 · 官方结果：<a class="link" href="https://ebim-benchmark.github.io/zh/results.html">ebim-benchmark.github.io</a></p>
-        <ul class="bullets">
-          <li>参与 Phase I 仿真基准与 Phase II 实体机器人真机评测，完成导航、双臂协同与可变形物体操作；负责策略 Docker 交付、仿真调参与跨站点（汉堡 / 慕尼黑 / 上海）评测对接。</li>
-          <li><span class="highlight">Task 2 全球第 4 名</span>（StarCore SJTU）。</li>
-        </ul>
-      </div>
-
-      <div class="entry">
-        <div class="entry-head">
-          <span class="entry-platform">山东大学软件学院</span>
-          <span class="entry-date">2025.04 – 2025.11</span>
-        </div>
-        <p class="entry-topic">强化学习与智能决策研究</p>
-        <ul class="bullets">
-          <li>围绕 Off-policy RL 中 Q-value 估计偏差与训练不稳定问题，分析 Soft Actor-Critic 中价值偏差的产生与传播机制，提出动态偏差补偿方法提升 Critic 估计稳定性。</li>
-          <li>完成算法实现、消融实验及多任务性能验证，分析不同偏差状态及补偿策略对价值估计与策略学习的影响。</li>
-          <li>成果首先发表于 DAI 2025（CCF-C，Oral），随后扩展理论分析与实验并发表于 Pattern Recognition（CCF-B，双一区 TOP）。</li>
-        </ul>
-      </div>
-
-      <div class="entry">
-        <div class="entry-head">
-          <span class="entry-platform">UCL / University of Bristol</span>
+          <span class="entry-platform">LLM Agent 与科学发现 Benchmark｜UCL / University of Bristol</span>
           <span class="entry-date">2026.03 – 至今</span>
         </div>
-        <p class="entry-topic">LLM Agent 与科学发现 Benchmark</p>
         <p class="entry-sub">指导教师：汪军教授、杨梦月老师</p>
         <ul class="bullets">
           <li>面向 AI for Science，设计评估 LLM Agent 科学发现能力的交互式 Benchmark，考察智能体自主完成理论形成、知识迁移、理论精化与错误修正的能力。</li>
@@ -307,25 +226,38 @@
 
       <div class="entry">
         <div class="entry-head">
-          <span class="entry-platform">多智能体游戏生成与进化系统</span>
+          <span class="entry-platform">具身大模型持续学习与奖励设计｜北京中关村学院 · 深澜计划</span>
+          <span class="entry-date">2026.03 – 2026.06</span>
+        </div>
+        <p class="entry-sub">指导教师：于超老师</p>
+        <ul class="bullets">
+          <li>围绕 Vision-Language-Action 模型持续学习与机器人泛化问题，开展 VLA 微调、机器人仿真评测及持续学习实验。</li>
+          <li>探索基于世界模型的内在奖励设计，利用预测信息辅助机器人策略探索，提升跨任务学习与泛化能力。</li>
+          <li>基于 RLinf 训练框架，开展 π0.5 + World Model 具身后训练实验，探索利用世界模型奖励改善策略学习与跨任务泛化。</li>
+        </ul>
+      </div>
+
+      <div class="entry">
+        <div class="entry-head">
+          <span class="entry-platform">CreativeGame｜上海交通大学 / Bristol｜多智能体游戏生成与进化系统</span>
           <span class="entry-date">2026</span>
         </div>
-        <p class="entry-topic">CreativeGame</p>
         <p class="entry-sub">指导教师：温睦宁老师、杨梦月老师</p>
         <ul class="bullets">
-          <li>参与构建多智能体迭代式游戏生成与进化框架，研究游戏机制生成、自动评价、Agent 协作及跨轮次经验积累。参与游戏规则建模与自动评价流程设计，支持系统通过多轮反馈实现机制优化与持续演化。</li>
-          <li>成果挂在 <a class="link" href="https://arxiv.org/abs/2604.19926">arXiv:2604.19926</a>，并获机器之心推广报道；参与开源项目 CreativeGame。</li>
+          <li>参与构建多智能体迭代式游戏生成与进化框架，研究游戏机制生成、自动评价、Agent 协作及跨轮次经验积累。</li>
+          <li>参与游戏规则建模与自动评价流程设计，支持系统通过多轮反馈实现机制优化与持续演化；成果挂在 <a class="link" href="https://arxiv.org/abs/2604.19926">arXiv:2604.19926</a>，并获机器之心推广报道。</li>
         </ul>
       </div>
     </section>
 
     <section>
-      <h2 class="section-title">
-        <svg viewBox="0 0 24 24"><path d="M3 3h2v18H3V3zm4 10h2v8H7v-8zm4-4h2v12h-2V9z"/></svg>
-        技能与其他
-      </h2>
-      <p class="entry-sub"><strong>技能</strong> Python / C++ / Java · PyTorch · RL · LLM Agent · 具身 / VLA · Git · Linux · Docker · LaTeX</p>
-      <p class="entry-sub" style="margin-top:3px;"><strong>意向</strong> 算法 / 具身智能 / AI Agent 工程实习 · <strong>链接</strong> <a class="link" href="https://github.com/vcjgcjc99/SAC-B">SAC-B</a> · <a class="link" href="https://ebim-benchmark.github.io/competition.html">EBiM</a></p>
+      <h2 class="section-title">技能与研究方向</h2>
+      <ul class="bullets">
+        <li>研究方向：具身智能、机器人学习、VLA、世界模型奖励、强化学习、LLM Agent 评测。</li>
+        <li>具身实践：覆盖 VLA 微调、世界模型奖励、双臂可变形物体操作、仿真到真机验证等方向。</li>
+        <li>科研产出：一作 / 主要作者工作覆盖强化学习、科学发现 Benchmark、多智能体生成系统，具备论文写作、实验设计与系统评测经验。</li>
+        <li>技术栈：Python / PyTorch，Isaac Sim 与机器人仿真评测，RLinf 训练框架，多智能体系统设计与自动化评测。</li>
+      </ul>
     </section>
   </div>
 </body>
