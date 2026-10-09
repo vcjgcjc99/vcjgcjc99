@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>汪涵 · 求职简历</title>
+  <title>汪涵 · 个人简历</title>
   <style>
     :root {
       --accent: #1e40af;
@@ -39,10 +39,26 @@
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
-      gap: 16px;
+      gap: 14px;
       padding-bottom: 10px;
       border-bottom: 2px solid var(--accent);
       margin-bottom: 14px;
+    }
+
+    .header-left-wrap {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      flex: 1;
+      min-width: 0;
+    }
+
+    .photo {
+      width: 28mm;
+      height: 37mm;
+      object-fit: cover;
+      border: 1px solid var(--line);
+      flex-shrink: 0;
     }
 
     .header-left h1 {
@@ -175,6 +191,25 @@
 
     .honor-item .name { flex: 1; }
 
+    .pub-list { list-style: none; padding: 0; }
+    .pub-list li {
+      margin-bottom: 8px;
+      font-size: 12.5px;
+      line-height: 1.5;
+      text-align: justify;
+    }
+    .pub-list .pub-tag {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      color: #fff;
+      background: var(--accent-soft);
+      padding: 1px 6px;
+      border-radius: 3px;
+      margin-right: 4px;
+      vertical-align: middle;
+    }
+
     .note {
       font-size: 12px;
       color: #6b7280;
@@ -196,9 +231,13 @@
 <body>
   <div class="page">
     <header class="header">
-      <div class="header-left">
-        <h1>汪涵</h1>
-        <p class="tagline">软件工程 · 本科 · 算法 / 具身智能 / AI Agent 实习</p>
+      <div class="header-left-wrap">
+        <img class="photo" src="photo_150x200.jpg" alt="汪涵 证件照" />
+        <div class="header-left">
+          <h1>汪涵</h1>
+          <p class="tagline">中国科学院大学 · 模式识别与智能系统 · 博士研究生（博0）</p>
+          <p class="tagline" style="margin-top:4px;font-size:13px;font-weight:500;color:var(--muted);">算法 / 具身智能 / AI Agent · 实习与科研并行</p>
+        </div>
       </div>
       <div class="contact">
         <div class="contact-row">
@@ -211,7 +250,7 @@
         </div>
         <div class="contact-row">
           <svg class="icon" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5z"/></svg>
-          <span>山东济南 · 山东大学</span>
+          <span>北京 · 中国科学院自动化研究所</span>
         </div>
         <div class="contact-row">
           <svg class="icon" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.38.6.11.82-.26.82-.58v-2.02c-3.34.72-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.75.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.5 1 .11-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.92 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.17 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.29-1.55 3.3-1.23 3.3-1.23.66 1.65.24 2.87.12 3.17.77.84 1.24 1.91 1.24 3.22 0 4.6-2.81 5.62-5.49 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.69.83.58C20.56 21.8 24 17.3 24 12 24 5.37 18.63 0 12 0z"/></svg>
@@ -229,14 +268,41 @@
           </h2>
           <div class="entry">
             <div class="entry-head">
-              <span class="entry-title">山东大学 · 软件学院</span>
-              <span class="entry-date">2022.09 — 2026.06（预计）</span>
+              <span class="entry-title">中国科学院自动化研究所 · 中国科学院大学</span>
+              <span class="entry-date">2026.09 — 至今</span>
             </div>
-            <p class="entry-sub">软件工程 · 本科 &nbsp;|&nbsp; GPA 3.98 / 5.0 &nbsp;|&nbsp; 专业排名 21/341 &nbsp;|&nbsp; 综合成绩 88</p>
+            <p class="entry-sub">模式识别与智能系统 · 工学博士（博0）</p>
+          </div>
+          <div class="entry">
+            <div class="entry-head">
+              <span class="entry-title">山东大学 · 软件学院</span>
+              <span class="entry-date">2022.09 — 2026.06</span>
+            </div>
+            <p class="entry-sub">软件工程 · 工学学士 &nbsp;|&nbsp; GPA 3.98 / 5.0 &nbsp;|&nbsp; 专业排名 21/341 &nbsp;|&nbsp; 综合成绩 88</p>
             <ul class="bullets">
               <li>核心课程：数据结构、操作系统、机器学习、深度学习、最优化方法等</li>
             </ul>
           </div>
+        </section>
+
+        <section>
+          <h2 class="section-title">
+            <svg viewBox="0 0 24 24"><path d="M6 2h9l5 5v15a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm8 1.5V8h4.5L14 3.5zM8 12h8v2H8v-2zm0 4h8v2H8v-2z"/></svg>
+            论文与发表
+          </h2>
+          <ol class="pub-list">
+            <li>
+              <span class="pub-tag">在投</span>
+              <strong>Han Wang</strong> et al. <em>EMOps: From Overconfident Stopping to Evidence-Grounded Diagnosis in Multi-Agent Root Cause Analysis</em>.
+              In <em>Proc. AAMAS 2027</em> (26th International Conference on Autonomous Agents and Multiagent Systems), Hanoi, Vietnam, 2027.
+            </li>
+            <li>
+              <span class="pub-tag">会议</span>
+              <strong>Han Wang</strong>, Wei Du, Yanyu Xu, Lizhen Cui.
+              <em>SAC-B: Soft Actor-Critic with Bias for Suppressing Q-value Overestimation in Off-Policy Reinforcement Learning</em>.
+              In <em>Proc. DAI 2025</em> (7th International Conference on Distributed Artificial Intelligence), pp. 58–66, ACM, 2025.
+            </li>
+          </ol>
         </section>
 
         <section>
@@ -272,27 +338,13 @@
 
           <div class="entry">
             <div class="entry-head">
-              <span class="entry-title">EMOps：多智能体根因分析中的证据驱动诊断</span>
+              <span class="entry-title">EMOps 微服务根因分析 Agent 系统</span>
               <span class="entry-date">2025 — 2026</span>
             </div>
-            <p class="entry-sub">科研 / 论文项目 · AIOps · Tool-using Agent</p>
+            <p class="entry-sub">对应 AAMAS 2027 在投论文 · AIOps · 多智能体 Tool-using Agent</p>
             <ul class="bullets">
-              <li>针对微服务 RCA Agent「高置信早停、诊断错误」问题，设计 Evidence Miner + RCA Analyst 双角色流水线与共享证据板</li>
-              <li>引入 Platt 校准映射停止阈值，在 AIOps2025 / OpenRCA 等基准上相对强基线提升加权准确率（WA w/ OS）</li>
-              <li>负责实验复现、消融与案例分析（早停修复、干扰项鲁棒性）</li>
-            </ul>
-          </div>
-
-          <div class="entry">
-            <div class="entry-head">
-              <span class="entry-title">SAC-B 连续控制强化学习</span>
-              <span class="entry-date">2024 — 2025</span>
-            </div>
-            <p class="entry-sub">个人项目 · PyTorch · Gymnasium</p>
-            <ul class="bullets">
-              <li>实现带偏差修正的 Soft Actor-Critic（SAC-B），在 Pendulum、LunarLanderContinuous、BipedalWalker 等环境训练与评测</li>
-              <li>整理可复现训练脚本、TensorBoard 可视化与超参说明，便于对比 PPO/TD3 等基线</li>
-              <li>仓库：<a href="https://github.com/vcjgcjc99/SAC-B">github.com/vcjgcjc99/SAC-B</a></li>
+              <li>Evidence Miner（信息增益选工具）+ RCA Analyst（证据板迭代诊断）+ Platt 校准早停，见「论文与发表」</li>
+              <li>在 AIOps2025、OpenRCA、RCA100 等基准完成主实验、消融与缺失/干扰项鲁棒性分析</li>
             </ul>
           </div>
         </section>
