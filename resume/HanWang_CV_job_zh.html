@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>汪涵 · 求职简历</title>
+  <style>
+    :root {
+      --accent: #1e40af;
+      --accent-soft: #2563eb;
+      --text: #1f2937;
+      --muted: #4b5563;
+      --line: #d1d5db;
+      --bg: #ffffff;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
+      font-size: 14px;
+      line-height: 1.55;
+      color: var(--text);
+      background: #f3f4f6;
+      padding: 24px;
+    }
+
+    .page {
+      max-width: 210mm;
+      min-height: 297mm;
+      margin: 0 auto;
+      background: var(--bg);
+      padding: 14mm 14mm 12mm;
+      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+    }
+
+    /* Header */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 16px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid var(--accent);
+      margin-bottom: 14px;
+    }
+
+    .header-left h1 {
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      color: #111827;
+    }
+
+    .header-left .tagline {
+      margin-top: 6px;
+      font-size: 14px;
+      color: var(--accent-soft);
+      font-weight: 600;
+    }
+
+    .contact {
+      text-align: right;
+      font-size: 12.5px;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    .contact a {
+      color: var(--accent-soft);
+      text-decoration: none;
+    }
+
+    .contact-row {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 6px;
+    }
+
+    .icon {
+      width: 14px;
+      height: 14px;
+      flex-shrink: 0;
+      fill: var(--accent);
+    }
+
+    /* Layout */
+    .columns {
+      display: grid;
+      grid-template-columns: 1.62fr 1fr;
+      gap: 18px;
+    }
+
+    section { margin-bottom: 14px; }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 8px;
+      padding-bottom: 4px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .section-title svg { width: 16px; height: 16px; fill: var(--accent); }
+
+    .entry { margin-bottom: 10px; }
+
+    .entry-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 8px;
+      margin-bottom: 3px;
+    }
+
+    .entry-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #111827;
+    }
+
+    .entry-sub {
+      font-size: 12.5px;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+
+    .entry-date {
+      font-size: 12px;
+      color: #6b7280;
+      white-space: nowrap;
+    }
+
+    ul.bullets {
+      padding-left: 1.15em;
+      color: var(--text);
+    }
+
+    ul.bullets li { margin-bottom: 3px; }
+
+    .highlight {
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .skills-grid {
+      display: grid;
+      gap: 6px;
+    }
+
+    .skill-row {
+      display: grid;
+      grid-template-columns: 88px 1fr;
+      gap: 6px;
+      font-size: 13px;
+    }
+
+    .skill-label {
+      font-weight: 600;
+      color: #374151;
+    }
+
+    .honor-item {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 5px;
+      font-size: 13px;
+    }
+
+    .honor-item .name { flex: 1; }
+
+    .note {
+      font-size: 12px;
+      color: #6b7280;
+      margin-top: 8px;
+    }
+
+    @media print {
+      body { background: white; padding: 0; }
+      .page {
+        box-shadow: none;
+        padding: 10mm 12mm;
+        max-width: none;
+      }
+      .note { display: none; }
+      @page { size: A4; margin: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="header">
+      <div class="header-left">
+        <h1>汪涵</h1>
+        <p class="tagline">软件工程 · 本科 · 算法 / 具身智能 / AI Agent 实习</p>
+      </div>
+      <div class="contact">
+        <div class="contact-row">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 4-8 5L4 8V6l8 5 8-5v2z"/></svg>
+          <span>wanghan334452@gmail.com</span>
+        </div>
+        <div class="contact-row">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M6.6 10.8a15 15 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.24 11.4 11.4 0 0 0 3.57.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.6a1 1 0 0 1 1 1 11.4 11.4 0 0 0 .57 3.57 1 1 0 0 1-.24 1L6.6 10.8z"/></svg>
+          <span>159-5660-9883</span>
+        </div>
+        <div class="contact-row">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5z"/></svg>
+          <span>山东济南 · 山东大学</span>
+        </div>
+        <div class="contact-row">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.38.6.11.82-.26.82-.58v-2.02c-3.34.72-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.75.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.5 1 .11-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.92 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.17 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.29-1.55 3.3-1.23 3.3-1.23.66 1.65.24 2.87.12 3.17.77.84 1.24 1.91 1.24 3.22 0 4.6-2.81 5.62-5.49 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.69.83.58C20.56 21.8 24 17.3 24 12 24 5.37 18.63 0 12 0z"/></svg>
+          <a href="https://github.com/vcjgcjc99">github.com/vcjgcjc99</a>
+        </div>
+      </div>
+    </header>
+
+    <div class="columns">
+      <main>
+        <section>
+          <h2 class="section-title">
+            <svg viewBox="0 0 24 24"><path d="M12 3 1 9l11 6 9-4.91V17h2V9L12 3zm0 13L3 11.09V17h18v-5.91L12 16z"/></svg>
+            教育背景
+          </h2>
+          <div class="entry">
+            <div class="entry-head">
+              <span class="entry-title">山东大学 · 软件学院</span>
+              <span class="entry-date">2022.09 — 2026.06（预计）</span>
+            </div>
+            <p class="entry-sub">软件工程 · 本科 &nbsp;|&nbsp; GPA 3.98 / 5.0 &nbsp;|&nbsp; 专业排名 21/341 &nbsp;|&nbsp; 综合成绩 88</p>
+            <ul class="bullets">
+              <li>核心课程：数据结构、操作系统、机器学习、深度学习、最优化方法等</li>
+            </ul>
+          </div>
+        </section>
+
+        <section>
+          <h2 class="section-title">
+            <svg viewBox="0 0 24 24"><path d="M4 6h16v12H4V6zm2 2v8h12V8H6zm2 2h8v4H8v-4z"/></svg>
+            项目经历
+          </h2>
+
+          <div class="entry">
+            <div class="entry-head">
+              <span class="entry-title">EBiM 具身双臂操作国际竞赛</span>
+              <span class="entry-date">2025.08 — 2026.10</span>
+            </div>
+            <p class="entry-sub">EBiM Benchmark Competition 2026 · Task 2 可变形材料操作 · 战队 StarCore SJTU</p>
+            <ul class="bullets">
+              <li>参与 Phase I 仿真基准与 Phase II 实体机器人（Mobile FR3 Duo）真机评测，完成导航、双臂协同与可变形物体操作</li>
+              <li>负责策略封装（Docker / 运行说明）、仿真调参与真机评测迭代，对接组织方跨汉堡 / 慕尼黑 / 上海测试流程</li>
+              <li>官方最终排名：<span class="highlight">Task 2 全球第 4 名</span>（StarCore SJTU；<a href="https://ebim-benchmark.github.io/zh/results.html">ebim-benchmark.github.io</a>，2026-10）</li>
+            </ul>
+          </div>
+
+          <div class="entry">
+            <div class="entry-head">
+              <span class="entry-title">AIC 能源热力 Text2SQL 竞赛方案</span>
+              <span class="entry-date">2025 — 2026</span>
+            </div>
+            <p class="entry-sub">全球校园人工智能算法精英大赛（AIC）· 能源热力 Text2SQL 赛道 · 团队项目</p>
+            <ul class="bullets">
+              <li>面向能源热力领域自然语言查数，构建 Schema 理解 → SQL 生成 → 执行校验的 Text2SQL 流水线</li>
+              <li>结合领域词表与 LLM 提示策略，提升多表 Join、条件过滤场景下的可执行率；开源：<a href="https://github.com/vcjgcjc99/text2sql">github.com/vcjgcjc99/text2sql</a></li>
+            </ul>
+          </div>
+
+          <div class="entry">
+            <div class="entry-head">
+              <span class="entry-title">EMOps：多智能体根因分析中的证据驱动诊断</span>
+              <span class="entry-date">2025 — 2026</span>
+            </div>
+            <p class="entry-sub">科研 / 论文项目 · AIOps · Tool-using Agent</p>
+            <ul class="bullets">
+              <li>针对微服务 RCA Agent「高置信早停、诊断错误」问题，设计 Evidence Miner + RCA Analyst 双角色流水线与共享证据板</li>
+              <li>引入 Platt 校准映射停止阈值，在 AIOps2025 / OpenRCA 等基准上相对强基线提升加权准确率（WA w/ OS）</li>
+              <li>负责实验复现、消融与案例分析（早停修复、干扰项鲁棒性）</li>
+            </ul>
+          </div>
+
+          <div class="entry">
+            <div class="entry-head">
+              <span class="entry-title">SAC-B 连续控制强化学习</span>
+              <span class="entry-date">2024 — 2025</span>
+            </div>
+            <p class="entry-sub">个人项目 · PyTorch · Gymnasium</p>
+            <ul class="bullets">
+              <li>实现带偏差修正的 Soft Actor-Critic（SAC-B），在 Pendulum、LunarLanderContinuous、BipedalWalker 等环境训练与评测</li>
+              <li>整理可复现训练脚本、TensorBoard 可视化与超参说明，便于对比 PPO/TD3 等基线</li>
+              <li>仓库：<a href="https://github.com/vcjgcjc99/SAC-B">github.com/vcjgcjc99/SAC-B</a></li>
+            </ul>
+          </div>
+        </section>
+
+        <section>
+          <h2 class="section-title">
+            <svg viewBox="0 0 24 24"><path d="M3 3h2v18H3V3zm4 10h2v8H7v-8zm4-4h2v12h-2V9zm4 6h2v6h-2v-6zm4-10h2v16h-2V5z"/></svg>
+            技能特长
+          </h2>
+          <div class="skills-grid">
+            <div class="skill-row"><span class="skill-label">编程语言</span><span>Python、C/C++、Java</span></div>
+            <div class="skill-row"><span class="skill-label">客户端</span><span>了解 Android / Qt 与常见 UI 工程化流程</span></div>
+            <div class="skill-row"><span class="skill-label">AI / Agent</span><span>PyTorch、具身智能 / VLA、LLM Agent、Text2SQL、强化学习、仿真与 Docker 交付</span></div>
+            <div class="skill-row"><span class="skill-label">工程工具</span><span>Git、Linux、Docker、VS Code / Cursor、LaTeX</span></div>
+          </div>
+        </section>
+      </main>
+
+      <aside>
+        <section>
+          <h2 class="section-title">
+            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14l-5-4.87 6.91-1.01L12 2z"/></svg>
+            竞赛荣誉
+          </h2>
+          <div class="honor-item">
+            <span class="name"><span class="highlight">EBiM 2026 · Task 2</span><br />可变形材料操作 · StarCore SJTU · 全球第 4 名</span>
+            <span class="entry-date">2026.10</span>
+          </div>
+          <div class="honor-item">
+            <span class="name">全球校园 AI 算法精英大赛（AIC）<br />能源热力 Text2SQL 赛道</span>
+            <span class="entry-date">2026</span>
+          </div>
+        </section>
+
+        <section>
+          <h2 class="section-title">
+            <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+            其他
+          </h2>
+          <ul class="bullets">
+            <li>求职意向：算法 / 具身智能 / AI Agent 工程实习</li>
+            <li>英语：CET-6</li>
+          </ul>
+        </section>
+      </aside>
+    </div>
+
+  </div>
+</body>
+</html>
