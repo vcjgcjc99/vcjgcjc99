@@ -5,25 +5,29 @@
 
 ### AI Documentation For Reviewing (optional; not shown to authors)
 
-**Paper read:** Full 15-page PDF (method, experiments, limitations, reproducibility statement).
+**Paper read:** Full 15-page PDF (Sections 2–4, Algorithm 1, experiments, limitations, reproducibility statement).
 
-**My process:** I read Sections 2–4 (background, QNF parameterization, soft TD update, \(\alpha\) OLS, greedification), Algorithm 1, experimental protocol (8 DMC tasks, 500k steps, 5 seeds, IQM + bootstrap CIs), Figures 2–4, and the limitation/discussion paragraphs on compute and exploration failures.
+**My process:** I read the soft-optimality derivation (Eqs. 7–10), QNF policy/value definitions (Eqs. 11–12), soft TD targets (Eqs. 13–14), semi-gradient update, alpha OLS, greedification, QMANSF architecture, Figures 2–4, and baseline protocol (8 DMC, 500k steps, 5 seeds, IQM + bootstrap CIs).
 
-**Original assessment (before formatting):** **Borderline accept (Rating 6).** The **softmax-as-normalizing-flow** idea is clean and the **\(\alpha\) OLS + greedification** ablations are thoughtful. I am skeptical of the abstract-level claim of parity with **widely used actor–critic** methods because **SAC/CrossQ win** on several reported locomotion tasks and **hopper-stand** exposes exploration/entropy adaptation weaknesses. Baseline tuning (shared hyperparameters across envs; MEow origin) and missing **wall-time** comparisons leave fairness open.
+**Original assessment (before formatting):** **Reject / weak reject (Rating 4).** The paper replaces SAC’s Gaussian actor with a **heavier normalizing flow** and keeps essentially the **same soft TD + twin critics + targets** pipeline. Eqs. 7–14 largely restate standard maximum-entropy RL and soft Bellman backups; the substantive content is **parameterization + training tricks** (OLS alpha, greedification). Empirically, QNF is **slower** (flows, log-det, stability heuristics) and **does not reliably match or beat SAC/CrossQ** on important tasks (e.g., cheetah-run, walker-run; hopper-stand exploration failure). The abstract claim of parity with “widely used actor-critic” methods is **not supported**. I do not see sufficient new insight or benchmark evidence for ICLR main track.
 
-**LLM use disclosure (ICLR AI policy):** I did **not** use a generative LLM to write the review fields below. This AI Documentation box is my own pre-submission assessment. *(Adjust if your actual workflow differs and follow ICLR’s reporting rules.)*
+**LLM use disclosure (ICLR AI policy):** I did **not** use a generative LLM to write the review fields below. This box is my own pre-submission assessment.
 
 ---
 
 ### Paper Summary *
 
-**Word / plain text (no LaTeX):** see `paste/50972_Paper_Summary_Word_only.txt`.
+**Word / plain text — copy this block into Word or OpenReview if LaTeX breaks (see also paste/50972_Paper_Summary_Word_only.txt):**
 
-Continuous **maximum-entropy Q-learning** requires representing a **softmax policy** over actions, but standard **actor–critic** pipelines first learn a scalar Q(s,a) (or critics) and then run a separate **policy extraction** step to fit the softmax (SAC, CrossQ, MPO). This paper proposes **Q Normalizing Flows (QNF)**: parameterize the **policy density directly** with a **normalizing flow**, so the policy **is** the normalized exponential of an implicit state–action potential (Eqs. 11–12), eliminating an explicit actor regression head while keeping **off-policy soft TD** with **twin critics** and **target networks**.
+Continuous maximum-entropy reinforcement learning needs a softmax policy over actions. Standard actor-critic methods (SAC, CrossQ, MPO) learn scalar Q critics and then train a separate actor to approximate the softmax of Q. This paper proposes Q Normalizing Flows (QNF): represent the policy with a normalizing flow so that the policy density is the Gibbs distribution of an implicit Q defined by the flow and a scalar value head (Equations 11–12), avoiding an explicit policy-extraction network while keeping off-policy soft temporal-difference learning with twin critics and target networks.
 
-Training applies **semi-gradient TD** to flow parameters (Eq. 15), contrasted with **full gradient-TD** as in Trust-PCL. Entropy temperature **alpha** is adapted each step via closed-form **OLS** on (log pi, advantage) pairs (Eq. 17). **Greedification** (Eqs. 18–20, weight **lambda**) pushes the policy toward colder distributions when TD error is small.
+The training target for critics follows the usual soft TD form (Equations 13–14), equivalent to reward plus discounted soft value at the next state with clipped double-Q. The flow is updated with semi-gradient TD rather than a SAC-style actor loss. Entropy temperature alpha is tuned each step by a closed-form least-squares fit on log-policy and advantage pairs (Equation 17). A greedification term with weight lambda pushes the policy toward colder, more peaked distributions when TD error is small (Equations 18–20).
 
-**QMANSF** is a masked autoregressive neural spline flow. Eight DeepMind Control tasks, 500k steps, 5 seeds, IQM with 95% bootstrap CIs; baselines SAC, CrossQ, FMER, FPO, MEow. QNF is competitive on several tasks but lags SAC/CrossQ on cheetah-run, walker-run, and hopper-stand. Simulation-only, dense rewards; limitations note compute and flow stability.
+The main flow architecture is QMANSF (masked autoregressive neural spline flow). Experiments on eight DeepMind Control tasks use five hundred thousand steps and five seeds, reporting IQM with bootstrap confidence intervals against SAC, CrossQ, FMER, FPO, and MEow. QNF is competitive on some tasks but underperforms SAC and CrossQ on exploitation-heavy locomotion and on hopper-stand. The authors acknowledge higher compute and flow instability. There is no convergence or bias analysis for semi-gradient TD with flows, and no wall-clock comparison to Gaussian actor-critic methods.
+
+**OpenReview (optional `$...$` math — paste directly on site, not through Word):**
+
+This paper proposes **Q Normalizing Flows (QNF)**: a **normalizing flow** represents the **softmax policy** of an implicit $Q_{\phi,\theta}$ (Eqs. 11–12), removing a separate SAC-style actor head while keeping **soft TD**, **twin critics**, and **targets**. Eqs. 7–14 restate **standard soft optimality** and **soft Bellman** targets. Training adds **semi-gradient TD** (Eq. 15), **OLS $\alpha$ tuning** (Eq. 17), and **greedification** ($\lambda$). **QMANSF** is evaluated on **8 DMC** tasks (500k steps, 5 seeds, IQM); QNF **lags SAC/CrossQ** on several runners and **hopper-stand**, with **higher compute** and **no theory**.
 
 ---
 
@@ -31,15 +35,15 @@ Training applies **semi-gradient TD** to flow parameters (Eq. 15), contrasted wi
 
 | Score (1–3) | **3** |
 |-------------|-------|
-| **Justification** | The motivation (softmax without separate actor), Algorithm 1, and Figure 1 communicate the training loop clearly. Related work situates MEow, Trust-PCL, and actor–critic softmax extraction. Limitations on compute and scope are stated explicitly. |
+| **Justification** | Writing, Algorithm 1, and figures are clear; limitations mention compute and scope. Presentation does not compensate for limited novelty or empirical gaps. |
 
 ---
 
 ### Informativeness
 
-| Score (1–3) | **2** |
+| Score (1–3) | **1** |
 |-------------|-------|
-| **Justification** | Offers a **unified Q-flow parameterization** plus practical **\(\alpha\)/\(\lambda\)** mechanisms with ablations, but benchmark breadth is modest (8 DMC, one hyperparameter sheet) and there is **no analysis of semi-gradient bias** or convergence for flow-based Q-learning. |
+| **Justification** | Core equations are standard soft RL; contribution is largely **replacing a Gaussian actor with a flow** plus **alpha/greed heuristics**. Incremental relative to SAC/CrossQ and prior flow-based entropy RL; **no new learning principle**, **no theory**, and **benchmarks do not show a reliable advantage** despite higher cost. |
 
 ---
 
@@ -47,63 +51,63 @@ Training applies **semi-gradient TD** to flow parameters (Eq. 15), contrasted wi
 
 | Score (1–3) | **2** |
 |-------------|-------|
-| **Justification** | Method and ablations (Figures 3–4) support internal claims about architecture choice and training knobs. Cross-method comparisons are **partially confounded** by shared cross-environment hyperparameters, MEow tuning provenance, stochastic-only evaluation for all methods, and absent wall-clock normalization; headline “similar to actor-critic” is not fully supported. |
+| **Justification** | Internal ablations (Figs. 3–4) are coherent, but **cross-method claims are overstated**: shared hyperparameters across envs, MEow tuning, missing wall-time, and **losses to strong baselines** on key tasks undermine the main empirical narrative. Semi-gradient correctness is not established. |
 
 ---
 
 ### Critical Strengths
 
-1. **Conceptual simplification of the actor–critic split.** Representing the **entropy-regularized policy as the generative model** removes the separate policy-improvement regression while retaining standard **off-policy TD + twin critics + targets**.
+1. **Clear exposition** of how a flow can represent a Gibbs policy and how soft TD targets attach to the same pipeline used in actor-critic entropy methods.
 
-2. **Training design is not an afterthought.** **OLS \(\alpha\) autotuning** responds to Figure 4’s fixed-\(\alpha\) sensitivity; **greedification** addresses \(\lambda=0\) stagnation and documents collapse at overly large \(\lambda\).
+2. **Ablations** for flow type (Fig. 3), fixed vs autotuned alpha, and greedification (Fig. 4) show the authors tested components of their training recipe, not only a single configuration.
 
-3. **Architecture selection within QNF is evidence-based.** Figure 3 compares multiple flow types; **QMANSF** is among the strongest QNF variants, justifying the main experimental choice.
-
-4. **Transparent about costs and failure modes.** Discussion acknowledges flows’ **compute**, **instability**, and exploration issues (hopper-stand), which helps interpret negative comparisons fairly.
-
-5. **Reproducibility commitment.** Anonymous code link and supplement claim (if fulfilled) would materially help given baseline sensitivity (SAC \(\alpha\) init, MEow defaults).
+3. **Limitations section** honestly notes simulation-only scope, compute, and instability—appropriate given the results.
 
 ---
 
 ### Critical Weaknesses
 
-1. **Overstated general comparison claim.** Abstract/conclusion language suggesting performance **similar to widely used actor–critic** methods is not aligned with tasks where **SAC/CrossQ achieve higher IQM** (notably cheetah-run, walker-run).
+1. **Limited novelty.** Equations 7–14 are textbook soft optimality and soft TD; the paper’s delta is **architectural (flow instead of Gaussian actor)** plus **OLS alpha and greedification**, not a new Bellman framework or Q-learning principle.
 
-2. **Baseline fairness concerns.** A **single hyperparameter table across all environments** may under-tune strong baselines or over-tune QNF; MEow built from Gym Hopper defaults with manual entropy tweaks complicates attribution.
+2. **Strictly worse cost–benefit vs SAC/CrossQ for many readers.** Normalizing flows require **sampling and log-determinant Jacobians** across layers; the paper does not provide wall-clock or FLOPs-matched comparisons, yet **stronger baselines win** on exploitation tasks (cheetah-run, walker-run) where precise control matters.
 
-3. **Exploration/entropy adaptation gap.** **hopper-stand** indicates QNF’s **greedification + autotune \(\alpha\)** does not match CrossQ’s ability to adapt entropy under weak reward—limiting “general continuous Q-learning” claims.
+3. **Abstract and conclusion overclaim.** Stating performance **similar to widely used actor-critic** methods is inconsistent with reported IQMs where **SAC/CrossQ are ahead**; the paper reads like a **SAC-variant submission** without consistent empirical upside.
 
-4. **No compute-normalized evaluation.** Flows pay **sampling + log-det** costs; without **wall-time** or FLOPs-matched comparisons, sample-efficiency curves may misrank methods for practical adoption.
+4. **Exploration and entropy handling.** hopper-stand (and related weak-signal settings) show QNF **fails to match CrossQ’s entropy adaptation**; greedification can **wait for reward** rather than explore—undermining “general continuous Q-learning” messaging.
 
-5. **Missing theory/diagnostics for semi-gradient TD.** The Trust-PCL contrast motivates the update choice but does not substitute for **bias measurements** or even systematic comparison to full-gradient updates on a diagnostic domain.
+5. **Baseline fairness.** One hyperparameter sheet across eight environments and MEow derived from Hopper defaults with manual entropy adjustments make it hard to attribute results to the flow idea rather than tuning.
 
-6. **Evaluation protocol choices.** **Stochastic evaluation for all methods** may disadvantage exploitation-focused Gaussian policies if deterministic eval is standard for some baselines; this interaction is not fully explored.
+6. **No theoretical or diagnostic support for semi-gradient TD through flows.** Without bias analysis or comparison to full-gradient updates, it is unclear the update is well-founded beyond engineering trial-and-error.
+
+7. **Narrow empirical scope.** Eight dense-reward DMC tasks at fixed budget are insufficient to justify ICLR-level claims about replacing mainstream actor-critic training.
 
 ---
 
 ### Questions For Authors *
 
-1. On **cheetah-run, walker-run, and hopper-stand**, please report **final IQM** and bootstrap CIs vs **SAC and CrossQ** at **matched environment steps** and **matched wall-clock**, including simple significance tests vs the best baseline per task.
+1. Provide **wall-clock and samples-to-threshold** tables vs SAC/CrossQ on all eight tasks; does QNF ever dominate when compute is matched?
 
-2. Is gains primarily from **flow parameterization** or from **\(\alpha\)-OLS + greedification**? Please include ablations: **QMANSF with fixed tuned \(\alpha\), no greed**; **Gaussian actor with OLS+greed**; **flow with SAC-style entropy tuning, no greed**.
+2. Ablate **Gaussian actor + OLS alpha + greed** (no flow) vs **QMANSF without OLS/greed** to separate **flow vs tricks**.
 
-3. Will released **code and hyperparameter tables** reproduce **every baseline** exactly (SAC \(\alpha\) initialization, CrossQ, MEow entropy schedule)?
+3. On cheetah-run, walker-run, hopper-stand, report **final IQM**, CIs, and simple tests vs the best baseline at **matched steps and matched wall-time**.
 
-4. How do rankings change if **SAC/CrossQ use deterministic evaluation** while flows remain stochastic, or if all methods use stochastic eval with matched action-noise protocols?
+4. Can you justify semi-gradient TD with **empirical bias measurements** vs Trust-PCL-style full gradients on a diagnostic domain?
 
-5. Can you quantify **semi-gradient bias** vs a Trust-PCL-style full-gradient update on a low-dimensional diagnostic task (even tabular or 2D control)?
+5. Will code reproduce **exact** SAC/CrossQ/MEow numbers, including alpha initialization and entropy schedules?
 
-6. Does **greedification** help exploitation at the cost of exploration universally, or only after sufficient reward signal—and can you show a task where \(\lambda>0\) hurts early exploration measurably?
+6. Why should the community adopt a **more expensive** policy class when **simpler actors win** on multiple headline tasks?
 
 ---
 
 ### Overall Recommendation *
 
-| Select on form (0–10, even numbers) | **6** |
+| Select on form (0–10, even numbers) | **4** |
 |-------------------------------------|-------|
-| **Label** | Marginally above acceptance threshold |
+| **Label** | Ok but not good enough — rejection |
 
-**Primary reasons:** Novel **Q-flow** formulation with credible ablations, but **empirical headline is strong relative to evidence** and **key benchmarks favor simpler actor–critic** methods.
+**Primary reasons:** **Incremental SAC-style pipeline** (flow actor + standard soft TD + heuristics), **higher compute**, **overstated parity with actor-critic**, and **inconsistent gains** vs SAC/CrossQ on important benchmarks. Insufficient for ICLR main track.
+
+*If the form uses Accept/Reject only:* **Reject.**
 
 ---
 
@@ -111,24 +115,26 @@ Training applies **semi-gradient TD** to flow parameters (Eq. 15), contrasted wi
 
 | Score (1–5) | **3** |
 |-------------|-------|
-| **Justification** | Comfortable evaluating SAC/CrossQ/DMC protocols and normalizing-flow RL at a high level; not a specialist in MEow/Trust-PCL implementation details. |
+| **Justification** | Familiar with SAC/CrossQ, soft TD, DMC benchmarking, and normalizing flows at a survey level; not an author of MEow/Trust-PCL. |
 
 ---
 
 ### Supporting Arguments For Recommendation *
 
-QNF addresses a real modeling redundancy in actor–critic entropy methods: learning \(Q\) and then separately fitting a softmax policy. Flows provide a flexible density model with tractable sampling and log-probabilities, and the paper’s **semi-gradient TD + OLS \(\alpha\) + greed \(\lambda\)** recipe is more than a bare architectural swap—Figure 4 shows these pieces matter for performance and stability.
+The paper’s motivation—represent the softmax policy directly rather than learning Q and a separate actor—is reasonable, and normalizing flows are a natural density class. However, after reading the method section, most of the “theory” block is **repackaging known identities** linking soft values to log partition functions and **standard soft TD targets** already used in SAC-like algorithms. What remains is an engineering swap: **replace the Gaussian actor with QMANSF** and add **alpha OLS** and **greedification** to make training workable.
 
-I could accept if the paper is read as **introducing a family of continuous Q-learners** with honest scope. I hesitate to rate higher because **the strongest baselines win on important domains**, exploration failure on hopper-stand is not a minor outlier, and fairness/compute reporting is incomplete. Moving to **8** would require matched wall-time, stronger per-task baseline tuning, and ablations that isolate **flow vs training tricks**. Moving to **4** would require believing the empirical package is too thin for ICLR; I am not there given the ablation quality, but I view **6** as appropriate.
+That could still be a useful workshop or specialized contribution if experiments showed **clear, reproducible wins** or **new capabilities** (multimodal policies, hard exploration, etc.). Here, the evidence cuts the other way: **SAC and CrossQ outperform QNF on multiple locomotion tasks**, hopper-stand exposes a real exploration weakness, and the authors themselves note **compute and stability** costs. Without wall-time normalization, the sample-efficiency plots overstate practical value. The abstract-level equivalence to “widely used actor-critic” is therefore misleading for a general ICLR audience.
+
+I would consider **raising to 5** only if rebuttal provided **matched-compute superiority** on key tasks and ablations proving gains are not solely from alpha/greed tricks. I would **not** raise to accept without **stronger benchmarks or theory**. **Rating 4** reflects: well-presented but **incremental and empirically insufficient**.
 
 ---
 
 ### Additional Feedback To Improve The Paper (optional; not part of decision)
 
-- Revise abstract/conclusion to **“competitive on several DMC tasks”** rather than broad parity with actor–critic.  
-- Add a **compute/latency table** per method (sample + wall-clock to reach a return threshold).  
-- Include **deterministic-eval** baseline curves where applicable.  
-- Expand limitation discussion on **when greedification harms exploration** with a concrete hopper-stand learning curve annotation.
+- Reframe as a **negative or mixed result** on whether flows beat Gaussian actors for soft Q-learning at matched compute.  
+- Move Eqs. 7–14 to appendix and foreground **what is new vs SAC** in one page.  
+- Add **Gaussian + same OLS/greed** baseline.  
+- Tone down all “similar to actor-critic” language unless supported task-by-task with significance and wall-time.
 
 ---
 
