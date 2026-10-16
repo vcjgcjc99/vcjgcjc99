@@ -2,17 +2,27 @@
 AI Documentation For Reviewing (optional; not shown to authors)
 ============================================================
 
-I read the full 36-page submission PDF. I wrote the assessment below in English first. The Chinese section was produced with LLM assistance for paste-in only. My unedited tendency before polish: weak accept for RL theory readers; borderline for the broad ICLR empirical audience. Original one-sentence take: population-level SAC analysis with a useful Gibbs-vs-MD tracking comparison, but strong oracle/curvature assumptions and appendix-only experiments limit practical impact.
+Paper read: Full 36-page PDF (main text + appendix experiments in Appendix K).
+
+My process: I read the introduction, Algorithm 1, Sections 4–8 (MDP setup, Gibbs vs mirror-descent targets, curvature/ Legendre operator, tracking lemmas, Corollary 1, Theorem 3), related work, conclusion/limitations, and Appendix K figures. I skimmed proof outlines in the appendix but did not verify every line of every proof.
+
+Original assessment (before any formatting for OpenReview): This is theory aligned with SAC practice (squashed Gaussian, one reverse-KL step per outer loop) rather than abstract policy-space mirror descent. The Gibbs vs MD target tracking comparison (Corollary 1, Lemma 9, Figure 2) is the clearest contribution. My concern is that results are conditional on a population critic oracle, global curvature \(R_{\hat Q}/2<\tau\), and one actor gradient step, with no deep RL or sample-complexity validation. For ICLR’s broad audience I lean borderline / marginally below accept (Rating 5); for a theory-focused reader I could see weak accept (Rating 6).
+
+LLM use disclosure (ICLR AI policy): I did not use a generative LLM to write the review text in the fields below (Summary, Strengths, Weaknesses, Questions, recommendation). This AI Documentation box contains my own pre-submission notes. *(If you later use an LLM only to fix grammar, keep this box as your honest original assessment and note that in the form as required.)*
+
+---
 
 ============================================================
 Paper Summary *
 ============================================================
 
-This paper studies Soft Actor-Critic (SAC) at the population level: a fixed-covariance squashed Gaussian actor (linear mean in pre-tanh space, tanh map to bounded actions), one projected reverse-KL gradient step per outer iteration toward an evolving target policy, and a critic oracle \(\hat Q_n\) satisfying \(\|\hat Q_n - Q_\tau^{\pi_{w_n}}\|_\infty \le \varepsilon_{\mathrm{crit}}\). The authors compare two target constructions that appear in entropy-regularized policy improvement: the classical Gibbs target (softmax of \(-\hat Q_n/\tau\), Eq. (4)) and a policy mirror descent (MD) target (Eq. (5)) with proximal step \(\lambda\), where the MD chain \(\{\pi_n\}\) is updated from the previous target rather than from the current actor parameters \(\pi_{w_n}\).
+This paper analyzes Soft Actor-Critic (SAC) in a population-level setting meant to reflect common implementation choices: a fixed-covariance squashed Gaussian policy (linear mean in pre-tanh coordinates, tanh push-forward to bounded actions), one projected reverse-KL gradient step per outer iteration toward a moving target policy, and access to a critic oracle \(\hat Q_n\) with uniform error \(\|\hat Q_n - Q_\tau^{\pi_{w_n}}\|_\infty \le \varepsilon_{\mathrm{crit}}\). The work compares two target policies used in entropy-regularized improvement: the Gibbs target \(\pi_{n+1}^G \propto \exp(-\hat Q_n/\tau)\) (Eq. 4) and a policy mirror descent (MD) target (Eq. 5) with proximal coefficient \(\lambda\), where the MD sequence \(\{\pi_n\}\) is defined by updating from the previous target rather than from the current actor \(\pi_{w_n}\).
 
-Under concentrability of the optimal occupancy measure (Assumption 1) and a Legendre-operator curvature condition on the critic, \(R_{\hat Q}/2 < \tau\) (Theorem 2), the reverse-KL actor objective is strongly convex and smooth on a parameter ball \(B(R)\). The analysis then separates target drift (how fast the target moves when \(\hat Q_n\) and replay distribution evolve) from actor tracking error (suboptimality after a single gradient step). For the MD target, Lemma 9 gives \(O(\lambda)\) drift of optimal actor parameters across iterations, while Theorem 1 balances this against \(1/\lambda\) terms reflecting MD policy improvement progress. Corollary 1 is the central comparison for the Gibbs target: the tracking bound includes a non-vanishing \(1/\tau\) contribution, so the actor cannot track the Gibbs target arbitrarily closely even when data shift is slow. For MD targets, \(\lambda\) explicitly trades slower target motion (easier tracking) against slower implicit policy improvement.
+Under concentrability of the optimal occupancy measure and a curvature condition on the critic expressed via a Legendre-type operator—\(R_{\hat Q}/2 < \tau\) (Theorem 2)—the authors show the reverse-KL actor objective is strongly convex and smooth on a ball \(B(R)\) in actor parameters. The analysis decomposes learning into target drift (how fast the target moves as \(\hat Q_n\) and state-action occupancy evolve) and actor tracking error (gap after a single gradient step on the KL objective). For MD targets, Lemma 9 bounds parameter drift of the ideal actor iterate by \(O(\lambda)\), while Theorem 1 also contains \(1/\lambda\) terms reflecting how aggressively the MD chain improves the target. Corollary 1 contrasts the Gibbs target: even when replay distributions shift slowly, the tracking bound retains a non-vanishing \(1/\tau\) term, so partial actor updates cannot track the Gibbs target arbitrarily well. For MD, \(\lambda\) is an explicit knob trading slower target motion (easier tracking) against slower implicit improvement along the MD chain.
 
-The main finite-time result (Theorem 3) shows a best-iterate regularized value gap \(V_\tau^{\pi_{w_r}}(\rho) - V_\tau^{\pi^*}(\rho) \le O(N^{-1/5} + \varepsilon_{\mathrm{approx}}(N))\) over \(N\) actor updates when \(\lambda = \Theta(N^{-4/5})\) and the actor step size \(h\) is small enough relative to \(\tau\) and \(R_{\hat Q}\). Approximation error aggregates critic oracle error and actor projection error. Appendix experiments on a solvable tabular MDP with exact critics (Appendix K) illustrate that violating \(R_{\hat Q}/2 < \tau\) degrades learning (Figure 1) and that MD vs Gibbs tracking error scales differently with \(\lambda\) at fixed actor budget (Figure 2). The paper does not validate the \(N^{-1/5}\) rate on deep RL benchmarks.
+The main finite-time guarantee (Theorem 3) is a best-iterate bound on the regularized value gap: over \(N\) actor updates, \(\min_r V_\tau^{\pi_{w_r}}(\rho) - V_\tau^{\pi^*}(\rho) \le O(N^{-1/5} + \varepsilon_{\mathrm{approx}}(N))\) when \(\lambda = \Theta(N^{-4/5})\) and the actor step size \(h\) is sufficiently small relative to \(\tau\) and \(R_{\hat Q}\). The paper positions this as the first population guarantee for partial KL steps with a squashed Gaussian actor, with a quantitative Gibbs vs MD distinction for tracking. Empirical support is confined to Appendix K: a tabular MDP with exact critics and controlled perturbations to vary curvature at fixed \(\varepsilon_{\mathrm{crit}}\) (Figure 1), plus MD vs Gibbs tracking error vs \(\lambda\) (Figure 2). There is no validation of the \(N^{-1/5}\) exponent on deep continuous-control benchmarks.
+
+---
 
 ============================================================
 Presentation
@@ -20,7 +30,9 @@ Presentation
 
 | Score (1–3) | 3 |
 |-------------|-------|
-| Justification | The SAC-like algorithm, assumptions, and main theorems (tracking lemmas, Corollary 1, Theorem 3) are mapped clearly; notation is heavy but signposted. Related work separates policy-space MD from parametric SAC. |
+| Justification | Algorithm 1, assumptions, and the theorem chain (Theorem 2 → tracking → Corollary 1 / Theorem 3) are easy to follow despite heavy notation. Related work clearly separates policy-space mirror descent from parametric SAC. Figures 1–2 in the appendix are tied to specific claims (curvature; tracking). |
+
+---
 
 ============================================================
 Informativeness
@@ -28,7 +40,9 @@ Informativeness
 
 | Score (1–3) | 2 |
 |-------------|-------|
-| Justification | Meaningful for readers who care about theory for practical SAC parametrization and target design (Gibbs vs MD tracking). Value is narrower for the general ICLR community because there is no deep RL validation and curvature is hard to verify in practice. |
+| Justification | Useful for researchers who want finite-time SAC-like theory and a design-level comparison of Gibbs vs MD targets. Less informative for the average ICLR reader seeking empirical advances or deployable hyperparameter rules, because curvature is not monitorable for deep critics and experiments are toy-scale only. |
+
+---
 
 ============================================================
 Soundness
@@ -36,47 +50,61 @@ Soundness
 
 | Score (1–3) | 2 |
 |-------------|-------|
-| Justification | The proof program (strong convexity → tracking → value gap) appears coherent under stated assumptions. Claims are conditional on population critic oracle, single exact projected actor step, and global curvature; finite-sample TD, target networks on Q, and multi-step actor updates are not analyzed. |
+| Justification | The mathematical story (strong convexity of the actor subproblem under curvature → tracking lemmas → value gap) appears internally consistent under stated assumptions. Soundness for real SAC is limited: population oracle critic, exact projected step, no TD/replay/sample analysis, and curvature assumed rather than derived for learned \(\hat Q\). |
+
+---
 
 ============================================================
 Critical Strengths
 ============================================================
 
-1. Implementation-aligned actor model. Fixed-covariance squashed Gaussian plus one reverse-KL gradient step per iteration matches a core gap between policy-space mirror descent theory and deployed SAC, rather than analyzing an abstract policy-class update.
+1. Closes a specific theory–practice gap. Many MD/convergence papers update in policy space or assume exact convex projections; this paper’s actor model matches tanh-squashed Gaussian SAC with a single reverse-KL step, which is how SAC is often run in code.
 
-2. Explicit best-iterate rate with tuning guidance. Theorem 3 gives \(O(N^{-1/5})\) (up to \(\varepsilon_{\mathrm{approx}}\)) with \(\lambda = \Theta(N^{-4/5})\), making the actor–target timescale trade-off concrete for theory readers.
+2. Gibbs vs MD tracking is a derived comparison, not rhetoric. Corollary 1’s persistent \(1/\tau\) term vs \(\lambda\)-controlled MD drift gives a precise sense in which a fresh softmax target can be harder to track under partial actor updates; Figure 2 illustrates the phenomenon under exact critics.
 
-3. Derived Gibbs vs MD tracking distinction. Corollary 1’s persistent \(1/\tau\) term versus \(\lambda\)-controlled MD drift is not merely definitional; Lemma 9 and Figure 2 support the mechanism on a controlled MDP with exact critics.
+3. Explicit finite-time rate and tuning exponent. Theorem 3’s \(O(N^{-1/5})\) best-iterate gap with \(\lambda = \Theta(N^{-4/5})\) is a concrete timescale prescription, rare in SAC analyses that include evolving targets.
 
-4. Curvature condition tied to failure modes. Theorem 2 links \(R_{\hat Q}/2 < \tau\) to strong convexity of the actor subproblem; Appendix K ablations at matched \(\varepsilon_{\mathrm{crit}}\) show qualitatively different behavior when the condition fails (Figure 1).
+4. Curvature condition linked to optimization geometry. Theorem 2 explains when the actor KL subproblem is strongly convex/smooth via \(R_{\hat Q}/2<\tau\); Appendix K shows matched \(\varepsilon_{\mathrm{crit}}\) but different curvature can yield qualitatively different learning (Figure 1).
+
+5. Honest limitations section. The authors acknowledge population-level abstraction and that experiments are mainly qualitative support for theory rather than benchmark validation.
+
+---
 
 ============================================================
 Critical Weaknesses
 ============================================================
 
-1. Population critic oracle. Uniform \(\varepsilon_{\mathrm{crit}}\) bounds omit TD bootstrapping, stochastic replay, double critics, and critic target networks—so the main theorems are not directly about standard deep SAC training dynamics.
+1. Critic oracle bypasses the hard part of deep SAC. Uniform \(\varepsilon_{\mathrm{crit}}\) does not model TD bootstrapping, target networks, double Q-learning, non-stationary replay, or stochastic gradients—so the main theorems are not guarantees for standard training loops.
 
-2. Uncheckable curvature in deep settings. \(R_{\hat Q}\) is a global supremum over states and actions; constructive examples are mainly linear Fourier critics (Remark 1). No recipe to monitor or enforce \(R_{\hat Q}/2 < \tau\) for ReLU/deep \(\hat Q\).
+2. Curvature \(R_{\hat Q}/2<\tau\) is strong and unverifiable in practice. Constructive discussion is largely for Fourier linear critics (Remark 1). There is no proposal for measuring or enforcing this during neural critic learning.
 
-3. Single actor step vs practice. Standard SAC often performs multiple actor updates per environment step or critic update; the paper does not quantify how inner-loop steps change Theorem 3.
+3. Single actor gradient step vs standard SAC inner loops. Many implementations take multiple actor updates per critic step; the paper does not analyze how \(K>1\) steps interact with Theorem 3 or tracking bounds.
 
-4. Target chain vs codebases. The MD target chain \(\pi_n\) in Eq. (5) may not align with every SAC implementation (e.g., actor-defined targets, slow-moving Q targets only). The incremental insight over “proximal targets move slowly” should be stated more sharply relative to Eq. (5)’s \(1/\lambda\) KL penalty.
+4. MD target chain may not match all SAC code paths. Eq. (5) defines \(\pi_n\) from the previous target, not necessarily from \(\pi_{w_n}\) or slow Q-target networks alone; the incremental novelty over “proximal targets move slowly” should be sharpened given the built-in \(1/\lambda\) KL term.
 
-5. Limited empirical support for rates. Appendix-only toy experiments demonstrate qualitative curvature and tracking phenomena but do not estimate the \(N^{-1/5}\) scaling or transfer to high-dimensional control.
+5. Slow \(N^{-1/5}\) rate without empirical scaling check. Even accepting the theory, readers cannot see log–log validation of the exponent in Appendix K; constants (e.g., strong convexity \(\kappa\)) may be tiny in reported regimes.
+
+6. Limited ICLR-wide impact. A 36-page theory paper with appendix-only experiments may under-deliver for a conference that heavily weights broad empirical relevance unless the AC weights RL theory strongly.
+
+---
 
 ============================================================
 Questions For Authors *
 ============================================================
 
-1. Can you state checkable sufficient conditions (architecture, weight decay, Lipschitz bounds, or online estimates) under which \(R_{\hat Q}/2 < \tau\) holds with high probability during learning for non-Fourier critics?
+1. Can you provide checkable sufficient conditions (architectural constraints, regularization, Lipschitz/Legendre bounds, or online estimators) ensuring \(R_{\hat Q}/2 < \tau\) for non-Fourier critics with high probability during training?
 
-2. How do the tracking and value-gap bounds change if the actor takes \(K>1\) projected gradient steps per critic update (as in common SAC schedules)? Is there a target \(K\)–\(N\) scaling analogous to \(\lambda\)–\(N\)?
+2. How do Corollary 1 and Theorem 3 change if the actor performs \(K>1\) projected gradient steps per critic update? Is there a recommended scaling of \(K\) with \(N\) analogous to \(\lambda \sim N^{-4/5}\)?
 
-3. What is the path to replace the critic oracle with a sample-complexity guarantee for TD learning with function approximation, even in a simplified linear setting?
+3. What is a plausible roadmap to replace the oracle critic with TD sample complexity—even in a linear function approximation setting with replay?
 
-4. In Figure 2, if one slows the Gibbs target artificially (e.g., exponential moving average on \(\hat Q\) or a target network) to match the effective drift of small \(\lambda\), how much of the MD advantage remains?
+4. If the Gibbs target is slowed (EMA on \(\hat Q\), Q target network) to mimic small effective drift of MD at small \(\lambda\), does Figure 2’s MD advantage persist? Please quantify.
 
-5. Can you add log–log plots of best-iterate value gap vs \(N\) on Appendix K to compare empirically with the \(N^{-1/5}\) exponent?
+5. Can you add log–log plots of best-iterate value gap vs \(N\) on Appendix K and report estimated slopes vs the theoretical \(-1/5\) exponent?
+
+6. How sensitive is Theorem 3 to the projection radius \(R\)? When minimizers lie on the boundary of \(B(R)\), do rates degrade in practice?
+
+---
 
 ============================================================
 Overall Recommendation *
@@ -85,11 +113,10 @@ Overall Recommendation *
 | Select on form (0–10, even numbers) | 5 |
 |-------------------------------------|-------|
 | Label | Marginally below acceptance threshold |
-| One-line reason | Solid SAC theory for a narrow audience, but population oracle, unverifiable curvature, and appendix-only experiments limit impact for ICLR’s broad program. |
 
-Two key reasons (accept vs reject): (1) Accept angle: first population guarantees for squashed-Gaussian SAC with partial KL steps and a sharp Gibbs-vs-MD tracking comparison (Corollary 1, Fig. 2). (2) Reject angle: main claims do not connect to deep SAC training (no TD/sample complexity; \(R_{\hat Q}/2<\tau\) not checkable); empirical section does not validate the \(N^{-1/5}\) rate.
+Primary reasons: Meaningful SAC theory and a clear Gibbs/MD tracking message, but conditional assumptions (oracle critic, curvature, single step) and lack of deep RL or rate validation limit contribution for ICLR’s general program.
 
-*If your form uses Accept/Reject only:* lean Borderline / Weak Reject for the main conference; Weak Accept if the AC prioritizes RL theory.
+---
 
 ============================================================
 Confidence *
@@ -97,23 +124,29 @@ Confidence *
 
 | Score (1–5) | 3 |
 |-------------|-------|
-| Justification | Comfortable with entropy-regularized RL, SAC, and policy mirror descent at a high level; I read the main text and theorem statements but did not verify every appendix proof in full detail. |
+| Justification | I am familiar with entropy-regularized RL, SAC, and mirror descent at the level needed to evaluate claims and related work; I did not re-derive all appendix proofs line-by-line. |
+
+---
 
 ============================================================
 Supporting Arguments For Recommendation *
 ============================================================
 
-The paper addresses a real mismatch between SAC implementations (squashed Gaussian, few reverse-KL steps, moving targets) and theory that often assumes policy-space updates or well-behaved direct policy gradients. The Gibbs versus MD target comparison is the most distinctive deliverable: the non-vanishing \(1/\tau\) term in Corollary 1 is an explicit warning that a classical softmax target can be hard to track when the actor only takes partial steps, whereas \(\lambda\) gives a knob in the MD formulation. Theorem 3’s \(N^{-1/5}\) rate with \(\lambda=\Theta(N^{-4/5})\) is a concrete, if slow, finite-time statement.
+The paper’s motivation is credible: SAC succeeds empirically while theory often analyzes easier settings. Formalizing partial reverse-KL steps toward Gibbs or MD targets with tracking error decomposed from target drift is the right conceptual frame. Corollary 1 is particularly valuable—it makes precise that Gibbs targets can entrain a residual tracking error scaling with \(1/\tau\), which is not fixed by taking smaller actor steps alone, whereas MD targets introduce \(\lambda\) as a separate timescale knob.
 
-However, for ICLR as a whole, the work reads as conditional theory: the critic oracle abstracts away the hardest practical component, and the curvature assumption is doing substantial work without a path to verification for neural critics. The toy experiments are useful for intuition but do not compensate for the lack of deep RL evidence or rate validation. I would raise to 6 if the authors convincingly clarify novelty over “proximal targets move slowly” and provide a credible bridge to multi-step actors or linear TD critics in rebuttal.
+Theorem 3 adds a best-iterate narrative with an explicit \(\lambda\)–\(N\) trade-off. That is publishable for theory-oriented readers. However, ICLR submissions are also judged on community-wide value. Here, the gap to deep SAC is large: without TD dynamics or verifiable curvature, practitioners cannot tell when the theory applies. Appendix experiments support mechanism (curvature; tracking vs \(\lambda\)) but not predictive power for MuJoCo/DMC training. I would increase to 6 if rebuttal (i) clearly separates novelty from the definitional slowness of MD targets and (ii) offers even a sketch extension to multi-step actors or linear TD critics.
+
+---
 
 ============================================================
 Additional Feedback To Improve The Paper (optional; not part of decision)
 ============================================================
 
-- Add a short “practitioner’s summary” box: what should a SAC user change (if anything) about targets or \(\lambda\) given your theory?  
-- Discuss target networks on Q and whether slowing \(\hat Q\) mimics small-\(\lambda\) MD advantages (ties to Question 4).  
-- Report numerical constants (strong convexity \(\kappa\)) in Appendix K when the curvature condition holds vs fails—helps readers see when theory is vacuous.  
-- Fix any notation drift between \(\pi_n\) (MD chain) and actor \(\pi_{w_n}\) in Algorithm 1 captions for implementers.
+- Add a practitioner-facing paragraph: should SAC users change target type or treat \(\lambda\) as a new hyperparameter, or is this mainly conceptual?  
+- Report numerical \(\kappa\) (strong convexity constant) in Appendix K when curvature is satisfied vs violated.  
+- Clarify in Algorithm 1 captions the distinction between MD chain \(\pi_n\) and actor \(\pi_{w_n}\) for readers implementing variants.  
+- Consider a short related-work table positioning vs recent actor–critic with critic error papers (Labbi, Zorba et al.) on what is genuinely new beyond tracking lemmas.
 
 ---
+
+*End of Submission 42504 review (English only — for OpenReview paste).*
