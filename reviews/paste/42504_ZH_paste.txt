@@ -1,20 +1,4 @@
 ============================================================
-AI 文档说明（可选；作者不可见）
-============================================================
-
-已阅读投稿全文（36 页）。英文评估为本人撰写；中文部分由 LLM 整理便于粘贴。润色前倾向：弱接收（RL 理论）；边界（广义 ICLR）。原话要点：population SAC + Gibbs/MD tracking 对照有贡献，但 oracle/曲率假设强、仅附录玩具实验，工程启示有限。
-
-============================================================
-论文摘要 *
-============================================================
-
-本文在 population 设定下分析 Soft Actor-Critic (SAC)：actor 为 固定协方差 tanh 压扁高斯（预 tanh 空间线性均值），每轮外层迭代对 evolving target 仅做 一步 投影 reverse-KL 梯度；critic 为 oracle \(\hat Q_n\)，满足 \(\|\hat Q_n - Q_\tau^{\pi_{w_n}}\|_\infty \le \varepsilon_{\mathrm{crit}}\)。比较两类 target：Gibbs（\(\propto \exp(-\hat Q_n/\tau)\)，式 (4)）与 policy mirror descent（式 (5)，步长 \(\lambda\)），其中 MD 链 \(\{\pi_n\}\) 由 上一 target 递推（非当前 actor \(\pi_{w_n}\)）。
-
-在 concentrability（假设 1）与 Legendre 算子曲率 \(R_{\hat Q}/2 < \tau\)（定理 2）下，reverse-KL actor 目标在 \(B(R)\) 上 强凸/光滑。分析区分 target 漂移 与 actor tracking 误差。MD target 下引理 9 给出最优 actor 参数的 \(O(\lambda)\) 漂移；定理 1 与 \(1/\lambda\) 的 MD 改进项权衡。推论 1 对 Gibbs target：tracking 界含 不消失的 \(1/\tau\)，即使数据分布变化慢，actor 也无法任意精确跟踪 Gibbs target；MD 则可通过 \(\lambda\) 放慢 target。
-
-定理 3：在 \(\lambda=\Theta(N^{-4/5})\) 及适当 \(h\) 下，\(N\) 次 actor 更新存在 best-iterate 正则化值差距 \(O(N^{-1/5}+\varepsilon_{\mathrm{approx}}(N))\)。附录 K 可精确解 critic 的表格 MDP 上，违反曲率条件时学习退化（图 1）；图 2 比较 MD/Gibbs 的 tracking 随 \(\lambda\) 变化。无深度 RL 上对 \(N^{-1/5}\) 率的验证。
-
-============================================================
 Presentation（呈现）
 ============================================================
 

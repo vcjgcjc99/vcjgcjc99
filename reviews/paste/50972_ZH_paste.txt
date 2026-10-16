@@ -1,20 +1,4 @@
 ============================================================
-AI 文档说明（可选；作者不可见）
-============================================================
-
-已阅读 15 页全文。英文为本人撰写；中文 LLM 整理便于粘贴。润色前倾向：边界接收——思路清晰、消融合理，但摘要相对 SAC/CrossQ 偏强，基线公平性与调参对齐不足。
-
-============================================================
-论文摘要 *
-============================================================
-
-本文提出 Q Normalizing Flows (QNF)，用于 连续动作、熵正则 强化学习。不同于 SAC/CrossQ/MPO 先学 \(Q(s,a)\) 再 单独 actor 回归 softmax，QNF 用 normalizing flow 直接参数化策略密度，使策略 即为 隐式 Q 的 softmax（式 11–12），省去显式 policy improvement 回归，仍采用 off-policy soft TD、双 critic 与 target network。
-
-Flow 用 semi-gradient TD（式 15）更新，作者区分于 Trust-PCL 的 full gradient-TD。熵温度 \(\alpha\) 每步对 \((\log\pi_\theta,\text{advantage})\) 做 OLS 闭式解（式 17）自适应；greedification（式 18–20，\(\lambda\)）在 TD 残差小时推向更冷 softmax，缓解 \(\lambda=0\) 停滞。
-
-主架构 QMANSF 为 masked autoregressive neural spline flow。8 个 DMC 任务、500k 步、5 seed、IQM + 95% bootstrap CI，对比 SAC、CrossQ、FMER、FPO、MEow；图 3 比较 flow 族，图 4 消融 \(\alpha\)/\(\lambda\)。多任务 有竞争力，但在 cheetah-run、walker-run 等利用型任务 弱于 SAC/CrossQ，hopper-stand 探索不足（CrossQ 熵适应更好）。仅 仿真、dense reward；作者承认 flow 算力与 稳定性 技巧（如 split quadratic solve）。
-
-============================================================
 Presentation（呈现）
 ============================================================
 
